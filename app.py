@@ -29,8 +29,8 @@ client = InferenceHTTPClient(
     api_key="hiXB6MTQOH0hlxROddmK"
 )
 
-# Define a custom temporary directory to avoid permission errors
-TEMP_DIR = "C:/Users/Rahul K/Documents/TempFiles"  # Make sure this directory exists
+# Create a temporary directory for the uploaded files during the session
+TEMP_DIR = tempfile.mkdtemp()  # Temporary directory will be used for storing uploaded files during session
 
 if not os.path.exists(TEMP_DIR):
     os.makedirs(TEMP_DIR)
