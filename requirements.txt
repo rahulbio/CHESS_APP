@@ -1,8 +1,8 @@
-streamlit
-ultralytics
-opencv-python-headless==4.5.3.56
-numpy
-Pillow
-gdown
-inference
-pyperclip
+streamlit==1.19.0  # Latest stable version
+opencv-python==4.5.5.64  # OpenCV for image processing
+numpy==1.23.5  # Required for numerical operations
+Pillow==9.3.0  # Image handling
+gdown==4.5.1  # For downloading from Google Drive
+pyperclip==1.8.2  # For clipboard functionality
+ultralytics==8.0.15  # YOLO for object detection
+inference-sdk==1.0.0  # Roboflow SDK
