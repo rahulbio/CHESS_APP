@@ -7,7 +7,6 @@ import os
 from ultralytics import YOLO
 from inference_sdk import InferenceHTTPClient
 import gdown
-import pyperclip  # For copying FEN to clipboard
 
 st.set_page_config(page_title="Chessboard to FEN", layout="wide")
 st.title("♟️ Chessboard Image to FEN Generator")
@@ -30,7 +29,7 @@ client = InferenceHTTPClient(
 )
 
 # Create a temporary directory for the uploaded files during the session
-TEMP_DIR = tempfile.mkdtemp()  # Temporary directory will be used for storing uploaded files during session
+TEMP_DIR = tempfile.mkdtemp()
 
 if not os.path.exists(TEMP_DIR):
     os.makedirs(TEMP_DIR)
@@ -78,7 +77,6 @@ if uploaded_file:
     # Resize image preview for better display (Limit size to 500px width)
     st.image(image, caption="Uploaded Image", use_container_width=True)
 
-    # Check if the board detection has already been done
     if 'fen' not in st.session_state:
         with st.spinner("🔍 Detecting chessboard..."):
             # Save temporarily and send to Roboflow
@@ -118,14 +116,16 @@ if uploaded_file:
     st.subheader("Generated FEN:")
     st.code(st.session_state.fen, language="text")
 
-    # Option to copy FEN to clipboard
-    if st.button("📋 Copy FEN to Clipboard"):
-        pyperclip.copy(st.session_state.fen)
-        st.success("FEN copied to clipboard!")
+    # ✅ JS-based copy-to-clipboard button (Streamlit Cloud compatible)
+    st.markdown(f"""
+        <button onclick="navigator.clipboard.writeText('{st.session_state.fen}')" 
+                style="padding:0.5rem 1rem; font-size:1rem; margin-top: 10px;">
+            📋 Copy FEN to Clipboard
+        </button>
+    """, unsafe_allow_html=True)
 
     # Option to view the FEN in Lichess
     if st.button("🔗 View in Lichess"):
         lichess_url = f"https://lichess.org/analysis/{st.session_state.fen}"
-        # Automatically open in a new tab
         js = f"window.open('{lichess_url}', '_blank');"
         st.components.v1.html(f'<script>{js}</script>', height=0)
