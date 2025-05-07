@@ -115,7 +115,7 @@ if uploaded_file:
 
     # Feedback message on copy
     if st.button("📋 Copy FEN"):
-        st.success("✅ FEN copied to clipboard! Use Ctrl+C or click the above box to copy manually if needed.")
+        st.success("✅ FEN copied to clipboard!")
 
     # Option to view the FEN in Lichess
     if st.button("🔗 View in Lichess"):
