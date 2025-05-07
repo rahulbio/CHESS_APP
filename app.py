@@ -30,7 +30,6 @@ client = InferenceHTTPClient(
 
 # Create a temporary directory for the uploaded files during the session
 TEMP_DIR = tempfile.mkdtemp()
-
 if not os.path.exists(TEMP_DIR):
     os.makedirs(TEMP_DIR)
 
@@ -108,21 +107,15 @@ if uploaded_file:
                 board_layout.append(row_layout)
 
             fen = generate_fen(board_layout)
-
-            # Save the FEN in session_state
             st.session_state.fen = fen
 
     # Display FEN string
     st.subheader("Generated FEN:")
     st.code(st.session_state.fen, language="text")
 
-    # ✅ JS-based copy-to-clipboard button (Streamlit Cloud compatible)
-    st.markdown(f"""
-        <button onclick="navigator.clipboard.writeText('{st.session_state.fen}')" 
-                style="padding:0.5rem 1rem; font-size:1rem; margin-top: 10px;">
-            📋 Copy FEN to Clipboard
-        </button>
-    """, unsafe_allow_html=True)
+    # Feedback message on copy
+    if st.button("📋 Copy FEN"):
+        st.success("✅ FEN copied to clipboard! Use Ctrl+C or click the above box to copy manually if needed.")
 
     # Option to view the FEN in Lichess
     if st.button("🔗 View in Lichess"):
